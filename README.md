@@ -1,1 +1,1 @@
-# d-anime-sync-server
+# d-sync-server
