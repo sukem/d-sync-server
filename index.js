@@ -62,4 +62,10 @@ io.on('connection', (socket) => {
         socket.to(room.name).emit('play');
         socket.emit('play');
     })
+
+    socket.on('seek_request', (time) => {
+        const room = rooms.find(r => r.ids.includes(socket.id));
+        console.log('got seek request: ' + room.name);
+        socket.to(room.name).emit('seek', time);
+    })
 });
