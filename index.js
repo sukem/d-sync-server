@@ -61,11 +61,25 @@ io.on('connection', (socket) => {
         console.log('got request: ' + room.name);
         socket.to(room.name).emit('play');
         socket.emit('play');
-    })
+    });
 
     socket.on('seek_request', (time) => {
         const room = rooms.find(r => r.ids.includes(socket.id));
         console.log('got seek request: ' + room.name);
         socket.to(room.name).emit('seek', time);
-    })
+        room.readyCount = 0;
+    });
+
+    socket.on('im_ready', () => {
+        const room = rooms.find(r => r.ids.includes(socket.id));
+        if (room.readyCount) {
+            room.readyCount = 1;
+        } else {
+            room.readyCount += 1;
+        }
+        if (room.readyCount === room.ids.length) {
+            socket.to(room.name).emit('resume');
+            socket.emit('resume');
+        }
+    });
 });
