@@ -72,11 +72,13 @@ io.on('connection', (socket) => {
 
     socket.on('im_ready', () => {
         const room = rooms.find(r => r.ids.includes(socket.id));
+        console.log('im_ready 1' + room.readyCount);
         if (room.readyCount) {
             room.readyCount = 1;
         } else {
             room.readyCount += 1;
         }
+        console.log('im_ready 2' + room.readyCount);
         // >== 変更
         if (room.readyCount >= (room.ids.length - 1)) {
             socket.to(room.name).emit('resume');
