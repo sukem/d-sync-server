@@ -77,9 +77,12 @@ io.on('connection', (socket) => {
         } else {
             room.readyCount += 1;
         }
-        if (room.readyCount === (room.ids.length - 1)) {
+        // >== 変更
+        if (room.readyCount >= (room.ids.length - 1)) {
             socket.to(room.name).emit('resume');
             socket.emit('resume');
+            // これで行けるか？
+            room.readyCount = 0;
         }
     });
 });
