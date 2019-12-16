@@ -76,7 +76,7 @@ io.on('connection', (socket) => {
         if (room.readyCount) {
             room.readyCount = 1;
         } else {
-            room.readyCount += 1;
+            room.readyCount = parseInt(room.readyCount) + parseInt(1);
         }
         console.log('im_ready 2' + room.readyCount);
         // >== 変更
