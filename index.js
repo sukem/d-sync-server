@@ -3,7 +3,7 @@
 const socketIO = require('socket.io');
 
 const PORT = process.env.PORT || 3000;
-const io = socketIO.listen(PORT, {
+const io = socketIO(PORT, {
     serveClient: false,
     // origins: ['*:*']
 });
